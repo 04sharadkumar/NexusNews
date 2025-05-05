@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiUser, FiLock, FiArrowRight } from 'react-icons/fi';
-import { adminAuth } from '@/Auth/adminAuth'; // make sure the import path is correct
+import { adminAuth } from './AdminAuth'; // make sure the import path is correct
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
