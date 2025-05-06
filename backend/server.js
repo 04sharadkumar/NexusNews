@@ -15,7 +15,7 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "https://nexusnews-frontend.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true ,limit:"10mb"}));
 app.use(cookieParser());
