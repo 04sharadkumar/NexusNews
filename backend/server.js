@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true ,limit:"10mb"}));
 app.use(cookieParser());
 
 
+
 // Routes
 app.get("/", (req, res) => res.send("Backend is Running 🚀"));
 
