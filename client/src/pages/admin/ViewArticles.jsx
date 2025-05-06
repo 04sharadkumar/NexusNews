@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import axios from "axios";
 import { FaTrash, FaEye, FaSpinner } from "react-icons/fa";
 import { FiAlertCircle } from "react-icons/fi";
-
+import { BASE_URL } from '@/lib/config';
 const ViewArticles = () => {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState("");
@@ -14,7 +14,7 @@ const ViewArticles = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5000/api/admin/showNews")
+      .get(`${BASE_URL}/api/admin/showNews`)
       .then((res) => {
         setArticles(res.data.news.reverse()); // Show newest first
         setLoading(false);
@@ -33,7 +33,7 @@ const ViewArticles = () => {
 
     setDeletingId(id);
     try {
-      await axios.delete(`http://localhost:5000/api/admin/deleteNews/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/deleteNews/${id}`);
       setArticles((prevArticles) => prevArticles.filter((article) => article._id !== id));
     } catch (err) {
       console.error("Error deleting article:", err);

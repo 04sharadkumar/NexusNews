@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "@/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from '@/lib/config';
 
 export default function SignUp() {
     const [formData, setFormData] = useState({
@@ -39,7 +40,7 @@ export default function SignUp() {
         
         try {
             const response = await axios.post(
-                "http://localhost:5000/api/auth/register", 
+                `${BASE_URL}/api/auth/register`, 
                 formData, 
                 { withCredentials: true }
             );

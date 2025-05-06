@@ -3,6 +3,8 @@ import axios from 'axios';
 import { format } from 'date-fns';
 import { FiClock, FiUser, FiAlertTriangle, FiTrendingUp } from 'react-icons/fi';
 import { MdOutlineDownloading } from "react-icons/md";
+import { BASE_URL } from '@/lib/config';
+
 function Articles() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ function Articles() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get('https://nexus-backend-yqr6.onrender.com/api/admin/showNews');
+        const res = await axios.get(`${BASE_URL}/api/admin/showNews`);
         setNews(res.data.news.reverse());
         setLoading(false);
       } catch (err) {

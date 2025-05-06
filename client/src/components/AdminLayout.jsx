@@ -5,6 +5,7 @@ import {
 } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '@/lib/config';
 
 const AdminLayout = () => {
   const [admin, setAdmin] = useState('');
@@ -13,7 +14,7 @@ const AdminLayout = () => {
 
   const fetchAdminData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/adminData');
+      const response = await axios.get(`${BASE_URL}/api/admin/adminData`);
       setAdmin(response.data.admin.username);
     } catch (error) {
       console.error('Error fetching admin data:', error);

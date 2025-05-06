@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FiUpload, FiCheckCircle, FiAlertCircle, FiImage } from 'react-icons/fi';
 import { Loader } from 'lucide-react';
 import { toast, Toaster } from 'react-hot-toast';
+import { BASE_URL } from '@/lib/config';
 
 const AddNews = () => {
   const [formData, setFormData] = useState({
@@ -74,7 +75,7 @@ const AddNews = () => {
       }
 
       // Send the FormData to your backend
-      await axios.post('http://localhost:5000/api/admin/addNews', dataToSend, {
+      await axios.post(`${BASE_URL}/api/admin/addNews`, dataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

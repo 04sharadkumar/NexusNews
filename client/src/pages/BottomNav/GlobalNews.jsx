@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FiGlobe } from 'react-icons/fi';
+import { BASE_URL } from '@/lib/config';
 
 const GlobalNews = () => {
     const [query, setQuery] = useState('');
@@ -13,7 +14,7 @@ const GlobalNews = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/news/globalNews`, {
+            const response = await axios.get(`${BASE_URL}/api/news/globalNews`, {
                 params: { query: query || 'latest' }
             });
             setNews(response.data.articles.slice(0, initial ? 5 : 10));

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'; // 👈 If you're using React Router
+import { BASE_URL } from '@/lib/config';
 
 const Settings = () => {
   const [admin, setAdmin] = useState('');
@@ -15,7 +16,7 @@ const Settings = () => {
 
   const fetchAdminData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/adminData');
+      const response = await axios.get(`${BASE_URL}/api/admin/adminData`);
       setAdmin(response.data.admin.username);
       setEmail(response.data.admin.email);
       setPassword(response.data.admin.password);
@@ -35,7 +36,7 @@ const Settings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/admin/adminUpdate', {
+      await axios.post(`${BASE_URL}/api/admin/adminUpdate`, {
         username: newUsername,
         email: newEmail,
         password: newPassword,

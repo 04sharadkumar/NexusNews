@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Trash2, Eye, Pencil, Loader2 } from 'lucide-react';
 import { FiAlertCircle } from 'react-icons/fi';
+import { BASE_URL } from '@/lib/config';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +14,7 @@ const ManageUsers = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/userInfo");
+      const res = await axios.get(`${BASE_URL}/api/admin/userInfo`);
       setUsers(res.data.users);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -30,7 +31,7 @@ const ManageUsers = () => {
 
     setDeletingId(id);
     try {
-      await axios.delete(`http://localhost:5000/api/admin/deleteUser/${id}`);
+      await axios.delete(`${BASE_URL}/api/admin/deleteUser/${id}`);
       setUsers((prev) => prev.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);

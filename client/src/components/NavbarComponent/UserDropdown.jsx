@@ -6,6 +6,8 @@ import { useAuth } from "@/Auth/AuthContext";
 import LoginModal from "./LoginModel";
 import axios from "axios";
 
+import { BASE_URL } from "@/lib/config";
+
 const UserDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -16,7 +18,7 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, {
+      await axios.post(`${BASE_URL}/api/auth/logout`, {}, {
         withCredentials: true,
       });
 

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { BASE_URL } from '@/lib/config';
 
 export const adminAuth = async (email, password) => {
   const response = await axios.post(
-    "http://localhost:5000/api/admin/adminLogin",
+    `${BASE_URL}/api/admin/adminLogin`,
     { email, password },
     { withCredentials: true } // Make sure this is `withCredentials`
   );

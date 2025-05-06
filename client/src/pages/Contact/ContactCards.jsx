@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, HelpCircle } from "lucide-react";
 import axios from "axios";
+import { BASE_URL } from '@/lib/config'; 
 
 const iconMap = {
   Mail: <Mail className="w-10 h-10 text-blue-600" />,
@@ -16,7 +17,7 @@ export default function ContactCards() {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/cards");
+        const res = await axios.get(`${BASE_URL}/api/cards`);
         setCards(res.data.cards); // ✅ Accessing `cards` from response
       } catch (error) {
         console.error("Error fetching cards:", error);

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FiEdit2, FiLogOut, FiSave, FiUser, FiMail, FiFileText, FiCamera } from "react-icons/fi";
+import { BASE_URL } from '@/lib/config';
 
 export default function ProfilePage() {
   const [formData, setFormData] = useState({ name: "", email: "", bio: "" });
@@ -22,7 +23,7 @@ export default function ProfilePage() {
     }
 
     axios
-      .get("http://localhost:5000/api/auth/profile", {
+      .get(`${BASE_URL}/api/auth/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -60,7 +61,7 @@ export default function ProfilePage() {
       formDataToSend.append("bio", formData.bio);
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
-      const res = await axios.put("http://localhost:5000/api/auth/profile", formDataToSend, {
+      const res = await axios.put(`${BASE_URL}/api/auth/profile`, formDataToSend, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -78,7 +79,7 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+      await axios.post(`${BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
       toast.success("Logged out successfully!");
       localStorage.removeItem("token");
       localStorage.removeItem("user");

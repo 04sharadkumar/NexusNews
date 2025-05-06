@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BASE_URL } from "@/lib/config";
 
 const LoginModal = ({ isOpen, onClose, onSignup }) => {
   if (!isOpen) return null; // Hide modal if not open
@@ -12,7 +13,7 @@ const LoginModal = ({ isOpen, onClose, onSignup }) => {
     setError(null); // Reset previous errors
 
     try {
-      const response = await fetch("http://localhost:5000/api/login", {
+      const response = await fetch(`${BASE_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

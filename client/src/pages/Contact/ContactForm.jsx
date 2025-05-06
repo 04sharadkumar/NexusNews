@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { Send } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '@/lib/config';
 
 export default function ContactForm() {
   const [step, setStep] = useState(1);
@@ -16,7 +17,7 @@ export default function ContactForm() {
     },
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await fetch("http://localhost:5000/api/contact", {
+        const response = await fetch(`${BASE_URL}/api/contact`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
