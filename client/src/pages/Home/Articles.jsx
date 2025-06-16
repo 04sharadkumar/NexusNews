@@ -16,7 +16,7 @@ function Articles() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/admin/showNews`);
+        const res = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/showNews`);
         setNews(res.data.news.reverse());
         setLoading(false);
       } catch (err) {
