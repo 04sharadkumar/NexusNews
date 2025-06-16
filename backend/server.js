@@ -14,8 +14,23 @@ const adminRoutes = require("./routes/adminRoutes");
 const app = express();
 connectDB();
 
+const allowedOrigins = [
+  'https://nexus-frontend-gamma.vercel.app',
+  'https://nexus-frontend-git-main-04sharadkumars-projects.vercel.app',
+  'https://nexus-frontend-gmh00k4jp-04sharadkumars-proj.vercel.app',
+  'http://localhost:5173' // optional for local dev
+];
 // Middleware
-app.use(cors({ origin: "https://nexusnews-frontend.vercel.app", credentials: true }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true ,limit:"10mb"}));
 app.use(cookieParser());
