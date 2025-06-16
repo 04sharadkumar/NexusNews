@@ -14,7 +14,7 @@ const AdminLayout = () => {
 
   const fetchAdminData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/admin/adminData`);
+      const response = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/adminData`);
       setAdmin(response.data.admin.username);
     } catch (error) {
       console.error('Error fetching admin data:', error);

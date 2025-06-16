@@ -3,7 +3,7 @@ import { BASE_URL } from '@/lib/config';
 
 export const adminAuth = async (email, password) => {
   const response = await axios.post(
-    `${BASE_URL}/api/admin/adminLogin`,
+    `https://nexus-backend-yqr6.onrender.com/api/admin/adminLogin`,
     { email, password },
     { withCredentials: true } // Make sure this is `withCredentials`
   );

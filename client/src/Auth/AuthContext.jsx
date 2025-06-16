@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
+      const response = await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/login`, {
         email,
         password,
       });

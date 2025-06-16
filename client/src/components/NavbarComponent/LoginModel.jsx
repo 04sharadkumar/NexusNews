@@ -13,7 +13,7 @@ const LoginModal = ({ isOpen, onClose, onSignup }) => {
     setError(null); // Reset previous errors
 
     try {
-      const response = await fetch(`${BASE_URL}/api/login`, {
+      const response = await fetch(`https://nexus-backend-yqr6.onrender.com/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -75,7 +75,7 @@ const AddNews = () => {
       }
 
       // Send the FormData to your backend
-      await axios.post(`${BASE_URL}/api/admin/addNews`, dataToSend, {
+      await axios.post(`https://nexus-backend-yqr6.onrender.com/api/admin/addNews`, dataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

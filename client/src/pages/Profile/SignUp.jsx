@@ -40,7 +40,7 @@ export default function SignUp() {
         
         try {
             const response = await axios.post(
-                `${BASE_URL}/api/auth/register`, 
+                `https://nexus-backend-yqr6.onrender.com/api/auth/register`, 
                 formData, 
                 { withCredentials: true }
             );

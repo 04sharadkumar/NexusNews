@@ -17,7 +17,7 @@ export default function ContactForm() {
     },
     onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await fetch(`${BASE_URL}/api/contact`, {
+        const response = await fetch(`https://nexus-backend-yqr6.onrender.com/api/contact`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

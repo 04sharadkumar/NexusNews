@@ -23,7 +23,7 @@ export default function ProfilePage() {
     }
 
     axios
-      .get(`${BASE_URL}/api/auth/profile`, {
+      .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -61,7 +61,7 @@ export default function ProfilePage() {
       formDataToSend.append("bio", formData.bio);
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
-      const res = await axios.put(`${BASE_URL}/api/auth/profile`, formDataToSend, {
+      const res = await axios.put(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, formDataToSend, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -79,7 +79,7 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
+      await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/logout`, {}, { withCredentials: true });
       toast.success("Logged out successfully!");
       localStorage.removeItem("token");
       localStorage.removeItem("user");

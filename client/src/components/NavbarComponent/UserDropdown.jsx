@@ -18,7 +18,7 @@ const UserDropdown = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${BASE_URL}/api/auth/logout`, {}, {
+      await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/logout`, {}, {
         withCredentials: true,
       });
 

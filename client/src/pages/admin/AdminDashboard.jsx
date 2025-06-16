@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const [recentActivitie, setRecentActivitie] = useState([]);
 useEffect(() => {   
 
-      axios.get(`${BASE_URL}/api/admin/dashboard/totalArticle`)
+      axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/dashboard/totalArticle`)
     
       .then((response) => {
         setArticleCount(response.data.totalArticles);
@@ -25,7 +25,7 @@ useEffect(() => {
 
 useEffect(() => {   
 
-    axios.get(`${BASE_URL}/api/admin/dashboard/totalUsers`)
+    axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/dashboard/totalUsers`)
   
     .then((response) => {
       setTotalUser(response.data.totalUsers);
@@ -42,7 +42,7 @@ useEffect(() => {
 
 useEffect(() => {   
 
-  axios.get(`${BASE_URL}/api/admin/dashboard/totalComments`)
+  axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/dashboard/totalComments`)
 
   .then((response) => {
     setComments(response.data.totalComments);
@@ -62,7 +62,7 @@ useEffect(() => {
 useEffect(() => {
 
   
-      const response = axios.get(`${BASE_URL}/api/admin/dashboard/recentActivities`);
+      const response = axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/dashboard/recentActivities`);
 
       response.then((response) => {
         setRecentActivitie(response.data.data);
@@ -74,7 +74,7 @@ useEffect(() => {
 
 const fetchAdminData = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/admin/adminData`);
+      const response = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/adminData`);
       setAdmin(response.data.admin.username);
       
     } catch (error) {

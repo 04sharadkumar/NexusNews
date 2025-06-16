@@ -14,7 +14,7 @@ const ViewArticles = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${BASE_URL}/api/admin/showNews`)
+      .get(`https://nexus-backend-yqr6.onrender.com/api/admin/showNews`)
       .then((res) => {
         setArticles(res.data.news.reverse()); // Show newest first
         setLoading(false);
@@ -33,7 +33,7 @@ const ViewArticles = () => {
 
     setDeletingId(id);
     try {
-      await axios.delete(`${BASE_URL}/api/admin/deleteNews/${id}`);
+      await axios.delete(`https://nexus-backend-yqr6.onrender.com/api/admin/deleteNews/${id}`);
       setArticles((prevArticles) => prevArticles.filter((article) => article._id !== id));
     } catch (err) {
       console.error("Error deleting article:", err);

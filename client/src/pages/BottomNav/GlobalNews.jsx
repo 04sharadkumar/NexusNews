@@ -14,7 +14,7 @@ const GlobalNews = () => {
         setError(null);
 
         try {
-            const response = await axios.get(`${BASE_URL}/api/news/globalNews`, {
+            const response = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/news/globalNews`, {
                 params: { query: query || 'latest' }
             });
             setNews(response.data.articles.slice(0, initial ? 5 : 10));

@@ -17,7 +17,7 @@ export default function ContactCards() {
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/api/cards`);
+        const res = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/cards`);
         setCards(res.data.cards); // ✅ Accessing `cards` from response
       } catch (error) {
         console.error("Error fetching cards:", error);

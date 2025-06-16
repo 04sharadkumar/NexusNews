@@ -14,7 +14,7 @@ const ManageUsers = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${BASE_URL}/api/admin/userInfo`);
+      const res = await axios.get(`https://nexus-backend-yqr6.onrender.com/api/admin/userInfo`);
       setUsers(res.data.users);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -31,7 +31,7 @@ const ManageUsers = () => {
 
     setDeletingId(id);
     try {
-      await axios.delete(`${BASE_URL}/api/admin/deleteUser/${id}`);
+      await axios.delete(`https://nexus-backend-yqr6.onrender.com/api/admin/deleteUser/${id}`);
       setUsers((prev) => prev.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error deleting user:", error);
