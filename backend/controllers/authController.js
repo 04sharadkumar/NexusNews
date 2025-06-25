@@ -43,7 +43,9 @@ const registerUser = async (req, res) => {
 
 // ✅ Login
 const loginUser = async (req, res) => {
+
   const { email, password } = req.body;
+
   try {
     // 🔑 Important: Select password explicitly
     const user = await User.findOne({ email }).select("+password");
@@ -66,10 +68,11 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Lax",
+      secure: process.env.NODE_ENV === "production", // true in prod, false in dev
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
       maxAge: 24 * 60 * 60 * 1000,
-    });
+});
+
 
     res.status(200).json({
       message: "Login successful and Token saved in cookies",
