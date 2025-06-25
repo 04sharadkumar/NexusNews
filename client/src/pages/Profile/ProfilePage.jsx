@@ -5,6 +5,7 @@ import { FiEdit2, FiLogOut, FiSave, FiUser, FiMail, FiFileText, FiCamera } from 
 import { BASE_URL } from '@/lib/config';
 
 export default function ProfilePage() {
+  
   const [formData, setFormData] = useState({ name: "", email: "", bio: "" });
   const [imagePreview, setImagePreview] = useState(
     "https://media.istockphoto.com/id/164303089/vector/user-icon-female.jpg?s=612x612&w=is&k=20&c=N8H3ySXljxTozA170udPkTRZq-Ubwr51VKbA5ge-e9Q="
@@ -18,7 +19,7 @@ export default function ProfilePage() {
   useEffect(() => {
     
 
-    axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
+    axios.get(`${BASE_URL}/api/auth/profile`, {
 
         withCredentials: true
       })
