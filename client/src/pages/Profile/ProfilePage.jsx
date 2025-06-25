@@ -33,7 +33,7 @@ export default function ProfilePage() {
         toast.error("Failed to load profile.");
       })
       .finally(() => setLoading(false));
-  }, [token]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
