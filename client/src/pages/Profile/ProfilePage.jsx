@@ -13,14 +13,10 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const token = localStorage.getItem("token");
+  
 
   useEffect(() => {
-    if (!token) {
-      toast.error("User not logged in.");
-      setLoading(false);
-      return;
-    }
+    
 
     axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
 
