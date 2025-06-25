@@ -22,9 +22,9 @@ export default function ProfilePage() {
       return;
     }
 
-    axios
-      .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
+    axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
+
+        withCredentials: true,
       })
       .then((res) => {
         const { name, email, bio, image } = res.data;

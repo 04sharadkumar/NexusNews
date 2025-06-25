@@ -84,6 +84,7 @@ const loginUser = async (req, res) => {
 
 
 const getCurrentUser = async (req, res) => {
+  
   const token = req.cookies.token;
   
   console.log(token);  // To check if the token is being received
