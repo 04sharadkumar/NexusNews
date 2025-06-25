@@ -24,7 +24,7 @@ export default function ProfilePage() {
 
     axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
 
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         const { name, email, bio, image } = res.data;
