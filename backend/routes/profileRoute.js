@@ -3,8 +3,9 @@ const router = express.Router();
 const protect = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
 const { getProfile, updateProfile } = require('../controllers/profileController');
+const {getCurrentUser} = require('../controllers/authController')
 
-router.get('/profile', protect, getProfile);
+router.get('/profile', protect, getCurrentUser);
 
 router.put('/profile', protect, upload.single('image'), updateProfile);
 

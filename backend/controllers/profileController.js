@@ -8,11 +8,11 @@ const getProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     res.status(200).json({
-      _id: req.user._id,
-      name: req.user.name,
-      email: req.user.email,
-      bio: req.user.bio,
-      image: req.user.image, // ✅ Ye hona chahiye
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      bio: user.bio,
+      image: user.image, // ✅ Correctly using the fetched user
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
@@ -49,7 +49,7 @@ console.log("From Frontend → body:", req.body);
         id: updatedUser._id,
         name: updatedUser.name,
         email: updatedUser.email,
-        bio: updatedUser.bio,
+       
         image: updatedUser.image,
       },
     });

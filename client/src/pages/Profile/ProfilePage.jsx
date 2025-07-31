@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FiEdit2, FiLogOut, FiSave, FiUser, FiMail, FiFileText, FiCamera } from "react-icons/fi";
-import { BASE_URL } from '@/lib/config';
+
 
 export default function ProfilePage() {
   
@@ -19,7 +19,7 @@ export default function ProfilePage() {
   useEffect(() => {
     
 
-    axios.get(`${BASE_URL}/api/auth/profile`, {
+    axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
 
         withCredentials: true
       })

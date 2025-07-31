@@ -90,6 +90,7 @@ const getCurrentUser = async (req, res) => {
   
   const token = req.cookies.token;
   
+  
   console.log(token);  // To check if the token is being received
 
   if (!token) return res.status(401).json({ message: "Not authenticated" });
