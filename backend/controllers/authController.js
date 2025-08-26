@@ -66,12 +66,14 @@ const loginUser = async (req, res) => {
       image: user.image,
     };
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true in prod, false in dev
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      maxAge: 24 * 60 * 60 * 1000,
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // ✅ hamesha true
+  sameSite: "None", // ✅ cross-site cookie allow
+  path: "/", 
+  maxAge: 24 * 60 * 60 * 1000,
 });
+
 
 
     res.status(200).json({

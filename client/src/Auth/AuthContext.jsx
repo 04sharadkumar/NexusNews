@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { BASE_URL } from '@/lib/config';
+
 
 const AuthContext = createContext();
 
@@ -23,7 +23,10 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/login`, {
         email,
         password,
-      });
+      },
+    {
+  withCredentials: true 
+});
 
       const { user, token } = response.data;
 
@@ -33,7 +36,11 @@ export const AuthProvider = ({ children }) => {
 
       return response;
     } catch (error) {
+      console.log(error);
+      
       throw new Error("Login failed");
+      
+      
     }
   };
 
