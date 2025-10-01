@@ -95,6 +95,7 @@ export default function ProfilePage() {
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {/* Profile Header */}
+          
           <div className="bg-gray-900 px-6 py-8 text-center">
             <div className="relative inline-block group">
               <label className="cursor-pointer">
