@@ -15,13 +15,11 @@ export default function ProfilePage() {
   // Fetch user profile on mount using cookie-based auth
  useEffect(() => {
   const token = localStorage.getItem("token");
-
-  axios
-    .get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,  // ✅ send JWT in header
-      },
+console.log("Profile Token",token)
+  const res = axios.get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
+      headers: {Authorization: `Bearer ${token}`,},
     })
+    console.log("profile res:",res)
     .then((res) => {
       const { name, email, bio, image } = res.data.user || res.data;
       setFormData({ name, email, bio: bio || "" });
