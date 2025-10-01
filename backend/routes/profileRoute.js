@@ -5,8 +5,8 @@ const upload = require('../middlewares/uploadMiddleware');
 const { getProfile, updateProfile } = require('../controllers/profileController');
 const {getCurrentUser} = require('../controllers/authController')
 
-router.get('/profile', getCurrentUser);
+router.get('/profile',protect ,getCurrentUser);
 
-router.put('/profile/edit', upload.single('image'), updateProfile);
+router.put('/profile/edit',protect ,upload.single('image'), updateProfile);
 
 module.exports = router;
