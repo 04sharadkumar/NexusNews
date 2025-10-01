@@ -12,20 +12,14 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const token = localStorage.getItem("token"); // ✅ Get token from localStorage
-
+  // Fetch user profile on mount
   useEffect(() => {
-    if (!token) {
-      toast.error("Not authenticated");
-      return;
-    }
-
     axios
       .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true, // ✅ send cookies
       })
       .then((res) => {
-        const { name, email, bio, image } = res.data.user || res.data; // some API return user inside object
+        const { name, email, bio, image } = res.data.user || res.data;
         setFormData({ name, email, bio: bio || "" });
         if (image) setImagePreview(image);
         localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
@@ -35,7 +29,7 @@ export default function ProfilePage() {
         toast.error("Failed to load profile.");
       })
       .finally(() => setLoading(false));
-  }, [token]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,11 +47,6 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-    if (!token) {
-      toast.error("Not authenticated");
-      return;
-    }
-
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
@@ -67,9 +56,7 @@ export default function ProfilePage() {
       const res = await axios.put(
         `https://nexus-backend-yqr6.onrender.com/api/auth/profile`,
         formDataToSend,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { withCredentials: true } // ✅ send cookie
       );
 
       const updatedUser = res.data.user || res.data;
@@ -88,8 +75,8 @@ export default function ProfilePage() {
     try {
       await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/logout`, {}, { withCredentials: true });
       toast.success("Logged out successfully!");
-      localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       setTimeout(() => (window.location.href = "/login"), 1000);
     } catch (err) {
       console.error("Logout error:", err);
@@ -205,9 +192,7 @@ export default function ProfilePage() {
                       placeholder="Tell us about yourself..."
                     />
                   ) : (
-                    <p className="text-gray-900 whitespace-pre-line">
-                      {formData.bio || "No bio added yet."}
-                    </p>
+                    <p className="text-gray-900 whitespace-pre-line">{formData.bio || "No bio added yet."}</p>
                   )}
                 </div>
               </div>
