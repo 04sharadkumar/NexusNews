@@ -12,31 +12,41 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Fetch user profile on mount using cookie-based auth
- useEffect(() => {
-  const token = localStorage.getItem("token");
-console.log("Profile Token",token)
-  const res = axios.get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
-      headers: {Authorization: `Bearer ${token}`,},
-    })
-    console.log("profile res:",res)
-    .then((res) => {
-      const { name, email, bio, image } = res.data.user || res.data;
-      setFormData({ name, email, bio: bio || "" });
-      if (image) setImagePreview(image);
-    })
-    .catch((err) => {
-      console.error("Error fetching profile:", err);
-      toast.error("Failed to load profile. Make sure you are logged in.");
-    })
-    .finally(() => setLoading(false));
-}, []);
+  // Fetch profile on mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) throw new Error("Token not found. Please login.");
 
+        const res = await axios.get(
+          "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        const { name, email, bio, image } = res.data.user || res.data;
+        setFormData({ name, email, bio: bio || "" });
+        if (image) setImagePreview(image);
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        toast.error("Failed to load profile. Make sure you are logged in.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  // Input change handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Image change handler
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -47,17 +57,21 @@ console.log("Profile Token",token)
     reader.readAsDataURL(file);
   };
 
+  // Save profile
   const handleSave = async () => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token not found. Please login.");
+
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("bio", formData.bio);
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
       const res = await axios.put(
-        `https://nexus-backend-yqr6.onrender.com/api/profile/profile`,
+        "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
         formDataToSend,
-        { withCredentials: true } // ✅ cookie-based auth
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       const updatedUser = res.data.user || res.data;
@@ -70,13 +84,19 @@ console.log("Profile Token",token)
     }
   };
 
+  // Logout
   const handleLogout = async () => {
     try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token not found.");
+
       await axios.post(
-        `https://nexus-backend-yqr6.onrender.com/api/auth/logout`,
+        "https://nexus-backend-yqr6.onrender.com/api/auth/logout",
         {},
-        { withCredentials: true } // ✅ clear the cookie
+        { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      localStorage.removeItem("token");
       toast.success("Logged out successfully!");
       setTimeout(() => (window.location.href = "/login"), 1000);
     } catch (err) {
@@ -97,7 +117,6 @@ console.log("Profile Token",token)
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {/* Profile Header */}
-          
           <div className="bg-gray-900 px-6 py-8 text-center">
             <div className="relative inline-block group">
               <label className="cursor-pointer">
@@ -148,6 +167,7 @@ console.log("Profile Token",token)
             </div>
 
             <div className="space-y-6">
+              {/* Name */}
               <div className="flex items-start">
                 <div className="bg-gray-100 p-3 rounded-lg mr-4">
                   <FiUser className="text-gray-900 text-lg" />
@@ -168,6 +188,7 @@ console.log("Profile Token",token)
                 </div>
               </div>
 
+              {/* Email */}
               <div className="flex items-start">
                 <div className="bg-gray-100 p-3 rounded-lg mr-4">
                   <FiMail className="text-gray-900 text-lg" />
@@ -178,6 +199,7 @@ console.log("Profile Token",token)
                 </div>
               </div>
 
+              {/* Bio */}
               <div className="flex items-start">
                 <div className="bg-gray-100 p-3 rounded-lg mr-4">
                   <FiFileText className="text-gray-900 text-lg" />
