@@ -12,16 +12,10 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  const token = localStorage.getItem("token"); // ✅ Get token from localStorage
+  // ✅ Get token from localStorage
+  const token = localStorage.getItem("token");
 
-  console.log("token nnhi mil raha kya",token);
-  
-  if (!token) {
-      toast.error("Not authenticated");
-     
-    
-    }
-
+  // Fetch user profile on mount
   useEffect(() => {
     if (!token) {
       toast.error("Not authenticated");
@@ -30,9 +24,8 @@ export default function ProfilePage() {
     }
 
     axios
-      .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
-        headers: { Authorization: `Bearer ${token}` }, // send token from localStorage
-        withCredentials: true, // also send cookie
+      .get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         const { name, email, bio, image } = res.data.user || res.data;
@@ -75,11 +68,12 @@ export default function ProfilePage() {
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
       const res = await axios.put(
-        `https://nexus-backend-yqr6.onrender.com/api/auth/profile`,
+        `https://nexus-backend-yqr6.onrender.com/api/profile/profile`,
         formDataToSend,
         {
-          headers: { Authorization: `Bearer ${token}` }, // send token
-          withCredentials: true, // also send cookie
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -87,7 +81,6 @@ export default function ProfilePage() {
       localStorage.setItem("user", JSON.stringify(updatedUser));
       if (updatedUser.image) setImagePreview(updatedUser.image);
       setIsEditing(false);
-
       toast.success("Profile updated successfully!");
     } catch (err) {
       console.error("Update failed:", err);
@@ -97,10 +90,14 @@ export default function ProfilePage() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`https://nexus-backend-yqr6.onrender.com/api/auth/logout`, {}, { withCredentials: true });
-      toast.success("Logged out successfully!");
+      await axios.post(
+        `https://nexus-backend-yqr6.onrender.com/api/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      toast.success("Logged out successfully!");
       setTimeout(() => (window.location.href = "/login"), 1000);
     } catch (err) {
       console.error("Logout error:", err);
@@ -216,7 +213,9 @@ export default function ProfilePage() {
                       placeholder="Tell us about yourself..."
                     />
                   ) : (
-                    <p className="text-gray-900 whitespace-pre-line">{formData.bio || "No bio added yet."}</p>
+                    <p className="text-gray-900 whitespace-pre-line">
+                      {formData.bio || "No bio added yet."}
+                    </p>
                   )}
                 </div>
               </div>
