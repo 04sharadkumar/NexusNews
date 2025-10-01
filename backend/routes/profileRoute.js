@@ -7,6 +7,6 @@ const {getCurrentUser} = require('../controllers/authController')
 
 router.get('/profile', getCurrentUser);
 
-router.put('/profile', upload.single('image'), updateProfile);
+router.put('/profile/edit', upload.single('image'), updateProfile);
 
 module.exports = router;
