@@ -41,6 +41,35 @@ export default function ProfilePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  
+
+   const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token")?.trim();
+      if (!token) throw new Error("Token not found");
+
+      const res = await axios.get(
+        "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      console.log("User Data:", res.data);
+    } catch (err) {
+      console.error("Error fetching profile:", err);
+      toast.error("Failed to load profile. Check your login.");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+
+
+  
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
