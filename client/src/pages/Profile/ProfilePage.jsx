@@ -13,22 +13,26 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   // Fetch user profile on mount using cookie-based auth
-  useEffect(() => {
-    axios
-      .get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
-        withCredentials: true, // ✅ send cookies
-      })
-      .then((res) => {
-        const { name, email, bio, image } = res.data.user || res.data;
-        setFormData({ name, email, bio: bio || "" });
-        if (image) setImagePreview(image);
-      })
-      .catch((err) => {
-        console.error("Error fetching profile:", err);
-        toast.error("Failed to load profile. Make sure you are logged in.");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+ useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  axios
+    .get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
+      headers: {
+        Authorization: `Bearer ${token}`,  // ✅ send JWT in header
+      },
+    })
+    .then((res) => {
+      const { name, email, bio, image } = res.data.user || res.data;
+      setFormData({ name, email, bio: bio || "" });
+      if (image) setImagePreview(image);
+    })
+    .catch((err) => {
+      console.error("Error fetching profile:", err);
+      toast.error("Failed to load profile. Make sure you are logged in.");
+    })
+    .finally(() => setLoading(false));
+}, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
