@@ -21,7 +21,7 @@ export default function ProfilePage() {
       }
       try {
         const res = await axios.get("https://nexus-backend-yqr6.onrender.com/api/profile/profile", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { "Authorization": `Bearer ${token}` },
         });
         const { name, email, bio, image } = res.data.user || res.data;
         setFormData({ name, email, bio: bio || "" });
@@ -61,7 +61,7 @@ export default function ProfilePage() {
       const res = await axios.put(
         "https://nexus-backend-yqr6.onrender.com/api/profile/profile/edit",
         formDataToSend,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { "Authorization": `Bearer ${token}` } }
       );
       const updatedUser = res.data.user || res.data;
       if (updatedUser.image) setImagePreview(updatedUser.image);
