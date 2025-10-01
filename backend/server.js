@@ -10,7 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require('./routes/contactRoutes');
 const  newsRoutes  = require("./routes/newsRoutes");
 const adminRoutes = require("./routes/adminRoutes");
-const profileRoutes = require("./routes/profileRoutes");
+const profileRoutes = require("./routes/profileRoute");
 
 const app = express();
 connectDB();
