@@ -59,7 +59,7 @@ export default function ProfilePage() {
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
       const res = await axios.put(
-        "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
+        "https://nexus-backend-yqr6.onrender.com/api/profile/profile/edit",
         formDataToSend,
         { headers: { Authorization: `Bearer ${token}` } }
       );
