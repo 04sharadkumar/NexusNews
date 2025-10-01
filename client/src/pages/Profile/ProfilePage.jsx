@@ -16,15 +16,22 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")?.trim();
+        
+        console.log("aUthToken",token);
+        
         if (!token) throw new Error("Token not found. Please login.");
 
         const res = await axios.get(
-          "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+  "https://nexus-backend-yqr6.onrender.com/api/profile/profile",
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }
+);
+        console.log("res ke liye",res.data);
 
         const { name, email, bio, image } = res.data.user || res.data;
         setFormData({ name, email, bio: bio || "" });
