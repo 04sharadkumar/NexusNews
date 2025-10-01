@@ -3,9 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { FiEdit2, FiLogOut, FiSave, FiUser, FiMail, FiFileText, FiCamera } from "react-icons/fi";
 
-
 export default function ProfilePage() {
-  
   const [formData, setFormData] = useState({ name: "", email: "", bio: "" });
   const [imagePreview, setImagePreview] = useState(
     "https://media.istockphoto.com/id/164303089/vector/user-icon-female.jpg?s=612x612&w=is&k=20&c=N8H3ySXljxTozA170udPkTRZq-Ubwr51VKbA5ge-e9Q="
@@ -14,27 +12,30 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  
+  const token = localStorage.getItem("token"); // ✅ Get token from localStorage
 
   useEffect(() => {
-    
+    if (!token) {
+      toast.error("Not authenticated");
+      return;
+    }
 
-    axios.get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
-
-        withCredentials: true
+    axios
+      .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        const { name, email, bio, image } = res.data;
+        const { name, email, bio, image } = res.data.user || res.data; // some API return user inside object
         setFormData({ name, email, bio: bio || "" });
         if (image) setImagePreview(image);
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
       })
       .catch((err) => {
         console.error("Error fetching profile:", err);
         toast.error("Failed to load profile.");
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,15 +53,24 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
+    if (!token) {
+      toast.error("Not authenticated");
+      return;
+    }
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("bio", formData.bio);
       if (selectedFile) formDataToSend.append("image", selectedFile);
 
-      const res = await axios.put(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, formDataToSend, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.put(
+        `https://nexus-backend-yqr6.onrender.com/api/auth/profile`,
+        formDataToSend,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       const updatedUser = res.data.user || res.data;
       localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -87,11 +97,12 @@ export default function ProfilePage() {
     }
   };
 
-  if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
@@ -101,12 +112,7 @@ export default function ProfilePage() {
           <div className="bg-gray-900 px-6 py-8 text-center">
             <div className="relative inline-block group">
               <label className="cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
+                <input type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                 <img
                   src={imagePreview}
                   alt="Profile"
