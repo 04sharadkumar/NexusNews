@@ -12,33 +12,23 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
 
-  // ✅ Get token from localStorage
-  const token = localStorage.getItem("token");
-
-  // Fetch user profile on mount
+  // Fetch user profile on mount using cookie-based auth
   useEffect(() => {
-    if (!token) {
-      toast.error("Not authenticated");
-      setLoading(false);
-      return;
-    }
-
     axios
       .get(`https://nexus-backend-yqr6.onrender.com/api/profile/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true, // ✅ send cookies
       })
       .then((res) => {
         const { name, email, bio, image } = res.data.user || res.data;
         setFormData({ name, email, bio: bio || "" });
         if (image) setImagePreview(image);
-        localStorage.setItem("user", JSON.stringify(res.data.user || res.data));
       })
       .catch((err) => {
         console.error("Error fetching profile:", err);
-        toast.error("Failed to load profile.");
+        toast.error("Failed to load profile. Make sure you are logged in.");
       })
       .finally(() => setLoading(false));
-  }, [token]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,11 +46,6 @@ export default function ProfilePage() {
   };
 
   const handleSave = async () => {
-    if (!token) {
-      toast.error("Not authenticated");
-      return;
-    }
-
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
@@ -70,15 +55,10 @@ export default function ProfilePage() {
       const res = await axios.put(
         `https://nexus-backend-yqr6.onrender.com/api/profile/profile`,
         formDataToSend,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { withCredentials: true } // ✅ cookie-based auth
       );
 
       const updatedUser = res.data.user || res.data;
-      localStorage.setItem("user", JSON.stringify(updatedUser));
       if (updatedUser.image) setImagePreview(updatedUser.image);
       setIsEditing(false);
       toast.success("Profile updated successfully!");
@@ -93,10 +73,8 @@ export default function ProfilePage() {
       await axios.post(
         `https://nexus-backend-yqr6.onrender.com/api/auth/logout`,
         {},
-        { withCredentials: true }
+        { withCredentials: true } // ✅ clear the cookie
       );
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
       toast.success("Logged out successfully!");
       setTimeout(() => (window.location.href = "/login"), 1000);
     } catch (err) {
