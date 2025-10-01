@@ -13,13 +13,9 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   const token = localStorage.getItem("token"); // ✅ Get token from localStorage
+  console.log("shard ",token);
 
-  useEffect(() => {
-    if (!token) {
-      toast.error("Not authenticated");
-      setLoading(false);
-      return;
-    }
+ 
 
     axios
       .get(`https://nexus-backend-yqr6.onrender.com/api/auth/profile`, {
