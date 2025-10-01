@@ -12,8 +12,8 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 
-router.get("/profile", protect, getProfile); // Get basic info
-router.put("/profile", protect, upload.single("image"), updateProfile ); // Update profile with image
-router.get("/me",getCurrentUser);
+// router.get("/profile", protect, getProfile); // Get basic info
+// router.put("/profile", protect, upload.single("image"), updateProfile ); // Update profile with image
+// router.get("/me",getCurrentUser);
 
 module.exports = router;
