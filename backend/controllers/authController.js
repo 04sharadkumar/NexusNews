@@ -32,7 +32,7 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({
       message: "Registered successfully",
-      token,
+      token:token,
       user: { id: newUser._id, name: newUser.name, email: newUser.email },
     });
   } catch (err) {
@@ -79,6 +79,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message: "Login successful and Token saved in cookies",
       user: userData,
+      token:token,
     });
 
   } catch (err) {
