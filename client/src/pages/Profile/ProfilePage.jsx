@@ -13,7 +13,14 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   const token = localStorage.getItem("token"); // ✅ Get token from localStorage
+
+  console.log("token nnhi mil raha kya",token);
   
+  if (!token) {
+      toast.error("Not authenticated");
+     
+    
+    }
 
   useEffect(() => {
     if (!token) {
