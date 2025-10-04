@@ -5,7 +5,7 @@ const upload = require('../middlewares/uploadMiddleware');
 const { getProfile, updateProfile } = require('../controllers/profileController');
 const {getCurrentUser} = require('../controllers/authController')
 
-router.get('/user',protect ,getCurrentUser);
+router.get('/userProfile',protect ,getCurrentUser);
 
 router.put('/profile/edit',protect ,upload.single('image'), updateProfile);
 
