@@ -20,9 +20,12 @@ export default function ProfilePage() {
         return;
       }
       try {
-        const res = await axios.get("https://nexus-backend-yqr6.onrender.com/api/profile/user", {
-          headers: { "Authorization": `Bearer ${token}` } 
-        });
+        const res = await axios.get(
+          "https://nexus-backend-yqr6.onrender.com/api/profile/userProfile",
+          { headers: { "Authorization": `Bearer ${token}` } }
+        );
+
+        console.log("Res",res.data);
         const { name, email, bio, image } = res.data.user || res.data;
         setFormData({ name, email, bio: bio || "" });
         if (image) setImagePreview(image);
