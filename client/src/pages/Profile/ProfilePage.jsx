@@ -20,7 +20,7 @@ export default function ProfilePage() {
         return;
       }
       try {
-        const res = await axios.get("https://nexus-backend-yqr6.onrender.com/api/profile", {
+        const res = await axios.get("https://nexus-backend-yqr6.onrender.com/api/profile/profile/user", {
            { headers: { "Authorization": `Bearer ${token}` } }
         });
         const { name, email, bio, image } = res.data.user || res.data;
