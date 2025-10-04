@@ -5,6 +5,7 @@ import Footer from "./components/Footer.jsx";
 import Sidebar from "./components/Sidebar.jsx";
 import BottomNav from "./pages/BottomNav/BottomNav.jsx";
 import SearchResults from "./pages/SearchResult.jsx";
+import Notfound from "./pages/Notfound.jsx";
 
 import ProfilePage from "./pages/Profile/ProfilePage.jsx";
 import SettingsPage from "./pages/Profile/SettingPage.jsx";
@@ -100,6 +101,9 @@ function AppRoutes() {
       <Route path="/CountryNews" element={<ProtectedRoute><CountryNews /></ProtectedRoute>} />
       <Route path="/Test" element={<Test />}/>
       <Route path="/SearchQuery" element={<ProtectedRoute><SearchQuery /></ProtectedRoute>} />
+
+       {/* 🚨 Catch-all for 404 */}
+      <Route path="*" element={<Notfound />} />
     </Routes>
   );
 }
