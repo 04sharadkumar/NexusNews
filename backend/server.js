@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 
 const connectDB = require("./config/dbConfig");
 
-
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require('./routes/contactRoutes');
 const  newsRoutes  = require("./routes/newsRoutes");
